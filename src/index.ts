@@ -1,3 +1,10 @@
 import Game from './game'
 
-const game = new Game();
+// declare global for debug
+declare global {
+  interface Window {
+    game: Game;
+  }
+}
+
+window.game = new Game();
