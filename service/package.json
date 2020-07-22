@@ -1,0 +1,11 @@
+{
+  "name": "service",
+  "version": "1.0.0",
+  "description": "Server for type-tetris",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Tiago Rodrigues Cunha <tiago.r.c.sn@gmail.com>",
+  "license": "ISC"
+}
