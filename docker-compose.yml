@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  app:
+    restart: always
+    container_name: type_tetris
+    image: node
+    build: ./public
+    ports: "8080:8080"
