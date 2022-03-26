@@ -2,7 +2,7 @@
   "name": "my-webpack-project",
   "version": "1.0.0",
   "description": "My webpack project",
-  "main": "server.js",
+  "main": "src/index.ts",
   "author": "Tiago Rodrigues Cunha <tiago.r.c.sn@gmail.com>",
   "license": "ISC",
   "scripts": {
@@ -34,14 +34,21 @@
   "dependencies": {
     "express": "^4.17.3",
     "socket.io": "^4.4.1",
-    "webpack-node-externals": "^3.0.0"
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/socket.io": "^3.0.1",
+    "@types/socket.io-client": "^1.4.36",
     "@types/webpack-dev-server": "^4.7.1",
     "@webpack-cli/generators": "^1.1.0",
+    "autoprefixer": "^10.4.2",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "postcss": "^8.4.8",
+    "postcss-loader": "^6.2.1",
     "prettier": "^2.6.0",
+    "style-loader": "^3.3.1",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.2",
     "webpack": "^5.70.0",
