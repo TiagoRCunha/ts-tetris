@@ -5,26 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris with Typescript</title>
-    <!-- <style>
-        body {
-            background-color: black;
-        }
-
-        #root {
-            border: 10px solid #ccc;
-            background-color: #ccc;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-            image-rendering: -moz-crisp-edges;
-            width: 248px;
-            height: 450px;
-        }
-    </style> -->
+    <link rel="stylesheet" href="public/styles.css">
 </head>
 
 <body>
-    <canvas id="root"></canvas>
+    <section class="start-menu">
+        <span class="start-text">Tetris Web</span>
+        <button class="start-btn js-start-btn">Começar</button>
+    </section>
+    
     <script src="public/script/testris.js"></script>
+    
+    <script src="public/script/control.js"></script>
 </body>
 
 </html>

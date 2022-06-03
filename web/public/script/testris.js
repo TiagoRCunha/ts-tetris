@@ -420,7 +420,6 @@ var Page = {
     DrawText(text, 'rgb(255,255,255)', '500', 'right', size, left, top);
   });
   
-  
   //--------------------------------------------------//
   //    GAME MANAGER OBJECT & LOGIC                   //
   //--------------------------------------------------//
@@ -446,6 +445,8 @@ var Page = {
     
     // Set up intial game var values
     Initialize: function(){
+
+      
       
       // reset current piece vars
       this.Pc.Next = this.Pc.Cur = this.Pc.ProjY = 0;
@@ -994,12 +995,26 @@ var Page = {
   function Init () { 
     
     // initialize the page object
+    
+
     Page.Initialize();
     
     // initialize the GM object
     GM.Initialize();
   }
-  Init();
+  //Init();
+
+  //--------------------------------------------------//
+  //   TROCA DE TELAS                                 //
+  //--------------------------------------------------//
+
+  let startMenu = document.querySelector('.start-menu');
+
+  let startBtnNew = document.querySelector('.js-start-btn');
+    startBtnNew.addEventListener('click', function(e){
+      startMenu.classList.add("hidden");
+      Init();
+    })
   
   
   // Main game loop. Updates GM object to check if tick can be
