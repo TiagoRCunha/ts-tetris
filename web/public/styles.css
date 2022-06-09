@@ -30,7 +30,7 @@ body {
 
   .start-menu {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     color: #fff;
     display: flex;
     justify-content: center;
@@ -50,7 +50,7 @@ body {
     margin: 0 auto;
     font-size: 80px;
     font-weight: 400;
-    background-color: #336833;
+    background-color: #33a133;
     color: rgb(190, 178, 178);
     border-radius: 15px;
     text-shadow: 2px 7px 6px rgba(0, 0, 0, 0.25);
@@ -58,7 +58,24 @@ body {
   }
 
   .start-btn:hover {
-    background-color: #33a133;
+    background-color: #336833;
+    cursor: pointer;
+  }
+
+  .how-to-play-button{
+    font-family: 'Goldman';
+    width: 120px;
+    height: 50px;
+    margin: 0 auto;
+    font-size: 15px;
+    background-color: #c0c0c0;
+    color: #000;
+    border-radius: 8px;
+    transition: all ease-in-out .2s;
+  }
+
+  .how-to-play-button:hover{
+    background-color: #909090;
     cursor: pointer;
   }
 
