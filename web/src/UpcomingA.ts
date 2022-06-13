@@ -12,10 +12,10 @@ export default class UpcomingA implements IDrawArea {
 
   constructor(
     private variables: Variables,
-    public left = 0,
-    public top = 0,
-    public width = 0,
-    public height = 0,
+    public left = 10.5,
+    public top = 2.6,
+    public width = 2.5,
+    public height = 2.5,
   ) {
     // bounds in UNITS
     this.leftBase = left;

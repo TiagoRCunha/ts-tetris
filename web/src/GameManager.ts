@@ -25,8 +25,8 @@ export default class GameManager {
 	private scoreBonus: number = 0;
 	private difficultFlag: boolean = false;
 
-  public current?: PieceObject = undefined;
-  public projectedYPosition: number;
+	public current?: PieceObject = undefined;
+	public projectedYPosition: number;
 
 	public game: Game;
 	public scoreBarCur: ScoreBarCurrent;
@@ -37,13 +37,8 @@ export default class GameManager {
 
 	constructor(
 		private variables: Variables,
-	) {}
-
-
-	/*-- FCNS ---------*/
-
-	// Set up intial game var values
-	initialize() {
+	) {
+		// Set up intial game var values
 		// reset current piece vars
 		this.current = undefined;
 		this.projectedYPosition = 0;
@@ -70,6 +65,12 @@ export default class GameManager {
 		this.variables.isAlive = true;
 	}
 
+	generateStartingPieces() {
+		this.generate();
+		this.generate();
+		this.generate();
+	}
+
 	// updates time each frame and executing logic if a tick has passed
 	update() {
 		this.timeCur = new Date().getTime();
@@ -80,6 +81,7 @@ export default class GameManager {
 				this.generate();
 			}
 			else {
+				console.log('gasdffasdfs')
 				this.doGravity();
 				this.projectedYPosition = this.tryProject();
 				this.game.isDirty = true;
@@ -169,72 +171,72 @@ export default class GameManager {
 	//    ACTIVE PIECE CONTROLLER                       //
 	//--------------------------------------------------//
 
-  // push upcoming piece to current & randomize new upcoming piece
-  generate() {
-    this.current = this.variables.upcoming[0];
-    this.variables.upcoming[0] = this.variables.upcoming[1];
-    this.variables.upcoming[1] = this.variables.upcoming[2];
+	// push upcoming piece to current & randomize new upcoming piece
+	generate() {
+		this.current = this.variables.upcoming[0];
+		this.variables.upcoming[0] = this.variables.upcoming[1];
+		this.variables.upcoming[1] = this.variables.upcoming[2];
 
-    // check if the player lost
-    if (this.current !== undefined) {
-      const spawnCollisions = this.checkCollisions(0, 0, 0);
-      if (spawnCollisions > 0) {
-        this.gameOver();
-        this.freeze();
-      }
-    }
+		// check if the player lost
+		if (this.current !== undefined) {
+			const spawnCollisions = this.checkCollisions(0, 0, 0);
+			if (spawnCollisions > 0) {
+				this.gameOver();
+				this.freeze();
+			}
+		}
 
-    // if player is alive, generate random upcoming piece
-    if (this.variables.isAlive) {
-      switch (Math.floor(Math.random() * 7)) {
-        case 0:
+		// if player is alive, generate random upcoming piece
+		if (this.variables.isAlive) {
+			switch (Math.floor(Math.random() * 7)) {
+				case 0:
 					this.variables.upcoming[2] = O();
 					break;
 
-        case 1:
+				case 1:
 					this.variables.upcoming[2] = I();
 					break;
 
-        case 2:
+				case 2:
 					this.variables.upcoming[2] = S();
 					break;
 
-        case 3:
+				case 3:
 					this.variables.upcoming[2] = Z();
 					break;
 
-        case 4:
+				case 4:
 					this.variables.upcoming[2] = L();
 					break;
 
-        case 5:
+				case 5:
 					this.variables.upcoming[2] = J();
 					break;
 
-        case 6:
+				case 6:
 					this.variables.upcoming[2] = T();
 					break;
 
-        default:
+				default:
 					break;
-      }
+			}
 
-      // if a current piece was set, inform the GM
-      if (this.current !== null) {
-        this.pieceSpawned();
-        this.game.isDirty = true;
-      }
+			// if a current piece was set, inform the GM
+			if (this.current !== null) {
+				this.pieceSpawned();
+				this.game.isDirty = true;
+			}
 
-      this.upcomingA.isDirty = true;
+			this.upcomingA.isDirty = true;
 			this.upcomingB.isDirty = true;
-      this.upcomingC.isDirty = true;
-    }
-  }
+			this.upcomingC.isDirty = true;
+		}
+	}
 
-  // freeze the current piece's position and rotation
-  freeze() {
-    if (this.variables.isAlive) {
-      let affectedRows: number[] = [];
+	// freeze the current piece's position and rotation
+	freeze() {
+		if (this.variables.isAlive) {
+			let affectedRows: number[] = [];
 
 			if (this.current !== undefined) {
 				for (let i = 0; i < this.current.currentRotation.units.length; i++) {
@@ -251,100 +253,102 @@ export default class GameManager {
 				}
 			}
 
-      this.checkUnits(affectedRows);
-      this.generate();
-    }
-  }
+			this.checkUnits(affectedRows);
+			this.generate();
+		}
+	}
 
-  // apply gravity to the current piece, checking for collisions
-  doGravity() {
-    if (this.current !== undefined) {
-      let collisions = this.checkCollisions(0, 0, 1);
+	// apply gravity to the current piece, checking for collisions
+	doGravity() {
+		if (this.current !== undefined) {
+			let collisions = this.checkCollisions(0, 0, 1);
 
-      if (collisions === 0) {
-        this.current.y++;
-      } else {
-        this.freeze();
-      }
-    }
+			if (collisions === 0) {
+				this.current.y++;
+			} else {
+				this.freeze();
+			}
+		}
 
-    this.refreshTimer();
-  }
+		this.refreshTimer();
+	}
 
-  tryRotate() {
-    if (this.current !== undefined) {
-      var collisions = this.checkCollisions(1, 0, 0);
+	tryRotate() {
+		console.log(this.current)
+		if (this.current !== undefined) {
+			var collisions = this.checkCollisions(1, 0, 0);
 
-      if (collisions === 0) {
-        this.current.rotate();
-        return true;
-      }
-    }
+			if (collisions === 0) {
+				console.log('rotation')
+				this.current.rotate();
+				return true;
+			}
+		}
 
-    return false;
-  }
+		return false;
+	}
 
-  // attempt to move current piece base on given XY, returns bool
-  tryMove(moveX: number, moveY: number) {
-    if (this.current !== undefined) {
-      var collisions = this.checkCollisions(0, moveX, moveY);
+	// attempt to move current piece base on given XY, returns bool
+	tryMove(moveX: number, moveY: number) {
+		if (this.current !== undefined) {
+			var collisions = this.checkCollisions(0, moveX, moveY);
 
-      if (collisions === 0) {
-        this.current.x += moveX;
-        this.current.y += moveY;
+			if (collisions === 0) {
+				this.current.x += moveX;
+				this.current.y += moveY;
 
-        if (moveY > 0) {
-          this.refreshTimer();
-          this.scoreBonus++;
-        }
-        return true;
-      }
-    }
-    return false;
-  }
+				if (moveY > 0) {
+					this.refreshTimer();
+					this.scoreBonus++;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 
-  // attempt to drop the current piece until it collides, returns bool
-  tryDrop() {
-    let squaresDropped = 0;
+	// attempt to drop the current piece until it collides, returns bool
+	tryDrop() {
+		let squaresDropped = 0;
 
-    if (this.current !== undefined) {
-      while (this.tryMove(0, 1) === true && squaresDropped < 22) {
-        squaresDropped++;
-      }
-    }
+		if (this.current !== undefined) {
+			while (this.tryMove(0, 1) === true && squaresDropped < 22) {
+				squaresDropped++;
+			}
+		}
 
-    if (squaresDropped > 0) {
-      this.scoreBonus += 2 * squaresDropped;
-      this.freeze();
-      return true;
-    } else {
-      return false;
-    }
-  }
+		if (squaresDropped > 0) {
+			this.scoreBonus += 2 * squaresDropped;
+			this.freeze();
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-  // attempt to find (and return) projected drop point of current piece
-  tryProject() {
-    let squaresDropped = 0;
+	// attempt to find (and return) projected drop point of current piece
+	tryProject() {
+		let squaresDropped = 0;
 
-    if (this.current !== undefined) {
-      while (this.checkCollisions(0, 0, squaresDropped) === 0 &&
-        squaresDropped < 22) {
-        squaresDropped++;
-      }
-    }
-    return squaresDropped - 1;
-  }
+		if (this.current !== undefined) {
+			while (this.checkCollisions(0, 0, squaresDropped) === 0 &&
+				squaresDropped < 22) {
+				squaresDropped++;
+			}
+		}
+		return squaresDropped - 1;
+	}
 
-  // return collision count OR -1 if test piece out of bounds
-  checkCollisions(doRot: number, offsetX: number, offsetY: number) {
-    let unitArr: Unit[] = [];
+	// return collision count OR -1 if test piece out of bounds
+	checkCollisions(doRot: number, offsetX: number, offsetY: number) {
+		let unitArr: Unit[] = [];
 		let collisionCount = 0;
 
 		if (this.current !== undefined) {
 			if (doRot === 1) {
-				unitArr = this.current?.currentRotation.nextUO.units;
+				unitArr = this.current.currentRotation.nextUO.units;
 			} else {
-				unitArr = this.current?.currentRotation.units;
+				unitArr = this.current.currentRotation.units;
 			}
 
 			for (let i = 0; i < unitArr.length; i++) {
@@ -361,8 +365,8 @@ export default class GameManager {
 				}
 			}
 		}
-    return collisionCount;
-  }
+		return collisionCount;
+	}
 
 	// called when a piece is spawned, advances level if needed
 	pieceSpawned() {

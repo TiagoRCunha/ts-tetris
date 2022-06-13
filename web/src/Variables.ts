@@ -16,7 +16,9 @@ export default class Variables {
 	public scoreCur: number = 0;
 
 	// next pieces
-  public upcoming: [PieceObject, PieceObject, PieceObject];
+  public upcoming: [PieceObject, PieceObject, PieceObject] = [
+		undefined, undefined, undefined
+	];
 
 	constructor() {}
 }

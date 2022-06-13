@@ -16,7 +16,9 @@ export default class PieceObject {
 	}
 
 	// rotate this piece by advancing to next unit obj of linked list
-	rotate() {
+	public rotate() {
+		console.log(this.currentRotation)
 		this.currentRotation = this.currentRotation.nextUO;
+		console.log(this.currentRotation)
 	}
 }

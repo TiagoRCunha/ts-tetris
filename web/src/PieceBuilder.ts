@@ -19,7 +19,7 @@ export default class PieceBuilder {
 		nodes[0] = new UnitObject(units);
 
 		for (let i = 0; i < rotCount; i++) {
-			nodes[i] = new UnitObject(units);
+			nodes[i] = new UnitObject([]);
 
 			for (let j = 0; j < units.length; j++) {
         let x: number;
@@ -36,6 +36,7 @@ export default class PieceBuilder {
         nodes[i].units[j] = new Unit(x, y);
       }
 		}
+		console.log('nodes', nodes);
 
 		return new LinkedListUnit(nodes);
 	}

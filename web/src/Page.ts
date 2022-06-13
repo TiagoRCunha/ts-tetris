@@ -21,7 +21,7 @@ export default class Page {
   private isSetup = false;
   private context: CanvasRenderingContext2D;
 
-  constructor(private variables: Variables, private gameManager: GameManager, private game: Game) {
+  constructor(private variables: Variables, private gameManager: GameManager, private game: Game, private areas: IDrawArea[]) {
     // console.log(this.shadow);
     // if page has not been setup, do initial setup
     if (this.isSetup === false) {
@@ -35,12 +35,14 @@ export default class Page {
       this.isSetup = true;
     }
 
-    this.windowChanged();
+		this.AreaArr = areas;
 
     // dirty all draw areas
     for (let i = 0; i < this.AreaArr.length; i++) {
       this.AreaArr[i].isDirty = true;
     }
+
+    this.windowChanged();
 
     // GM.Initialize();
   }
@@ -58,15 +60,24 @@ export default class Page {
    * this procedure gives to unitSize the calculation of minimum window width and height
    */
   public windowChanged(): void {
-    const bodyW = document.documentElement.clientWidth,
-      bodyH = document.documentElement.clientHeight,
-      newUnitW = (bodyW - (bodyW % 80)) / 16,
-      newUnitH = (bodyH - (bodyH % 100)) / 20,
-      newUnitMin = Math.max(Math.min(newUnitW, newUnitH), 20);
+    const bodyW = document.documentElement.clientWidth;
+		const bodyH = document.documentElement.clientHeight;
+		const newUnitW = (bodyW - (bodyW % 80)) / 16;
+		const newUnitH = (bodyH - (bodyH % 100)) / 20;
+		const newUnitMin = Math.max(Math.min(newUnitW, newUnitH), 20);
+		console.log(
+			bodyW,
+			bodyH,
+			newUnitW,
+			newUnitH,
+			newUnitMin,
+		)
 
     this.unitSize = newUnitMin;
+		console.log('unit size', this.unitSize);
 
-    let rightLimit = 0, bottomLimit = 0;
+    let rightLimit = 0;
+		let bottomLimit = 0;
 
     for (let i = 0; i < this.AreaArr.length; i++) {
       this.AreaArr[i].calculateBounds(this.unitSize);
@@ -79,9 +90,9 @@ export default class Page {
     this.canvas.height = bottomLimit;
 
     // left pos uses Game.W because ideally that area is centered
-    var topPos = (bodyH - bottomLimit) / 2,
-      leftPos = (bodyW / 2) - (this.game.W / 2),
-      rightOffset = bodyW - (leftPos + rightLimit) - this.unitSize * 0.5;
+    let topPos = (bodyH - bottomLimit) / 2;
+		let leftPos = (bodyW / 2) - (this.game.W / 2);
+		let rightOffset = bodyW - (leftPos + rightLimit) - this.unitSize * 0.5;
 
     // if default canvas positioning extends beyond screen, adjust it
     if (rightOffset < 0) {
@@ -93,6 +104,7 @@ export default class Page {
   }
 
   update() {
+		console.log(this.unitSize);
     for (let i = 0; i < this.AreaArr.length; i++) {
       if (this.AreaArr[i].isDirty) {
         this.AreaArr[i].draw(this.unitSize, this.context);

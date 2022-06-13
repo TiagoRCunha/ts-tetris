@@ -42,6 +42,7 @@ export default class Game implements IDrawArea {
   }
 
   draw(unitSize: number, context: CanvasRenderingContext2D) {
+			console.log(this.isDirty);
       // unitSize minus a couple pixels of separation
       let uDrawSize = unitSize - 2;
 			let drawL;
@@ -111,6 +112,7 @@ export default class Game implements IDrawArea {
     this.top = this.topBase * unitSize;
     this.W = this.widthBase * unitSize;
     this.H = this.heightBase * unitSize;
+		console.log(this.left, this.top, this.W, this.H)
 
     this.isDirty = true;
   }

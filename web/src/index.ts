@@ -8,6 +8,7 @@ import ScoreBarHigh from './ScoreBarHigh';
 import UpcomingA from './UpcomingA';
 import UpcomingB from './UpcomingB';
 import UpcomingC from './UpcomingC';
+const HowToPlayImage = require('./assets/how-to-play.jpg')
 
 // declare global for debug
 // WARNING not working for production
@@ -19,7 +20,7 @@ declare global {
 
 let page: Page;
 let GM: GameManager;
-const variables = new Variables();
+let variables = new Variables();
 
 if (process.env.NODE_ENV === 'development') {
   global.window.page = page;
@@ -32,20 +33,29 @@ if (typeof window !== 'undefined') {
 }
 
 if (typeof document !== 'undefined') {
-
   let startMenu = document.querySelector('#startMenu');
 
   let startBtnNew = document.querySelector('.js-start-btn');
   startBtnNew.addEventListener('click', function (e) {
     startMenu.classList.add("hidden");
     GM = new GameManager(variables);
+
     GM.game = new Game(variables, GM);
     GM.scoreBarCur = new ScoreBarCurrent(variables);
     GM.scoreBarHigh = new ScoreBarHigh(variables);
     GM.upcomingA = new UpcomingA(variables);
     GM.upcomingB = new UpcomingB(variables);
     GM.upcomingC = new UpcomingC(variables);
-    page = new Page(variables, GM, GM.game);
+
+    page = new Page(variables, GM, GM.game, [
+      GM.game,
+      GM.scoreBarCur,
+      GM.scoreBarHigh,
+      GM.upcomingA,
+      GM.upcomingB,
+      GM.upcomingC,
+    ]);
+    GM.generateStartingPieces();
 
     /** 
      *  Main game loop. Updates GM object to check if tick can be
@@ -66,37 +76,41 @@ if (typeof document !== 'undefined') {
 
   htpButton.addEventListener("click", function (e) {
     Swal.fire({
-      template: '#modal'
+      template: '#modal',
+      imageUrl: HowToPlayImage,
+      background: '#141414',
+      confirmButtonColor: '#33a133'
     })
   })
 
   document.addEventListener('keydown', (event) => {
-    var key = event.keyCode || event.which;
+    var key = event.key;
+    console.log('key', key)
 
     if (variables.isAlive) {
       switch (key) {
         // Up arrow OR W = rotate     
-        case 38:
-        case 87:
+        case 'w':
+        case 'ArrowUp':
           page.setGameDirty(GM.tryRotate());
           break;
         // Left arrow OR A = move left
-        case 37:
-        case 65:
+        case 'a':
+        case 'ArrowLeft':
           page.setGameDirty(GM.tryMove(-1, 0));
           break;
         // Right arrow OR D = move right  
-        case 39:
-        case 68:
+        case 'd':
+        case 'ArrowRight':
           page.setGameDirty(GM.tryMove(1, 0));
           break;
         // Down arrow OR S = move down  
-        case 40:
-        case 83:
+        case 's':
+        case 'ArrowDown':
           page.setGameDirty(GM.tryMove(0, 1));
           break;
         // Spacebar to drop the current piece
-        case 32:
+        case ' ':
           page.setGameDirty(GM.tryDrop());
           break;
         default: break;
@@ -110,7 +124,23 @@ if (typeof document !== 'undefined') {
 
     // if player not alive, reset the game
     else {
-      page = new Page(variables, GM, GM.game);
+      variables = new Variables()
+      GM = new GameManager(variables);
+      GM.game = new Game(variables, GM);
+      GM.scoreBarCur = new ScoreBarCurrent(variables);
+      GM.scoreBarHigh = new ScoreBarHigh(variables);
+      GM.upcomingA = new UpcomingA(variables);
+      GM.upcomingB = new UpcomingB(variables);
+      GM.upcomingC = new UpcomingC(variables);
+
+      page = new Page(variables, GM, GM.game, [
+        GM.game,
+        GM.scoreBarCur,
+        GM.scoreBarHigh,
+        GM.upcomingA,
+        GM.upcomingB,
+        GM.upcomingC,
+      ]);
     }
 
   }, false);
