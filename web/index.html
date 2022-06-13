@@ -5,15 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris with Typescript</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="public/styles.css">
 </head>
 
 <body>
-    <section class="start-menu">
+    <section id="startMenu" class="start-menu">
         <span class="start-text">Tetris Web</span>
         <button class="start-btn js-start-btn">Começar</button>
-        &nbsp;
         <button class="how-to-play-button">Como jogar</button>
     </section>
     <template id="modal">
@@ -22,13 +19,6 @@
         <swal-param name="allowEscapeKey" value="false" />
         <swal-param name="customClass" value='{ "popup": "my-popup" }' />
     </template>
-
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="public/script/testris.js"></script>
-    <script src="public/script/howPlay.js"></script>
-    <script src="public/script/control.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

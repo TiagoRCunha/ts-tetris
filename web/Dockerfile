@@ -1,4 +1,6 @@
 FROM node:12-alpine
-COPY "./public" ./
+WORKDIR /tetris
+COPY ./public .
 RUN npm install
-CMD "node" "bundle.js"
+EXPOSE 7171
+CMD ["node", "bundle.js"]

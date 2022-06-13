@@ -13,6 +13,7 @@ const stylesHandler = isProduction
 const config = {
   entry: "./src/index.ts",
   output: {
+    globalObject: "this",
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {

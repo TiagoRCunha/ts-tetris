@@ -11,7 +11,7 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "prestart": "npm run build:prod",
-    "start": "node server.js",
+    "start": "node dist/main.js",
     "watch": "webpack --watch"
   },
   "contributors": [
@@ -29,12 +29,28 @@
       "name": "Henrique Klayton G. R.",
       "email": "henrique70031@gmail.com",
       "url": "https://www.linkedin.com/in/henrique-klayton/"
+    },
+    {
+      "name": "Gustavo de Oliveira Crist",
+      "email": "gustavo.olichrist@gmail.com",
+      "url": "https://www.linkedin.com/in/gustavo-de-oliveira-christ"
+    },
+    {
+      "name": "Jhony Rodrigues de Souza",
+      "email": "jhonyrdesouza@gmail.com",
+      "url": "https://www.linkedin.com/in/jhonyrdesouza/"
+    },
+    {
+      "name": "Lucio Ewald do Nascimento",
+      "email": "lucioew28@gmail.com",
+      "url": "https://www.linkedin.com/in/lucioew/"
     }
   ],
   "dependencies": {
     "express": "^4.17.3",
     "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1"
+    "socket.io-client": "^4.4.1",
+    "sweetalert2": "^11.4.17"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
